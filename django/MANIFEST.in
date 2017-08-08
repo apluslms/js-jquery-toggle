@@ -1,0 +1,1 @@
+recursive-include js_jquery_toggle *.txt *.js *.html *.jinja *.py

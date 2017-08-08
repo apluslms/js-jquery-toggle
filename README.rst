@@ -50,3 +50,10 @@ You can convert :code:`ul` with radio inputs or checkboxes to group of buttons w
   $('#options').replaceCheckboxesWithButtons();
 
 Check the script for more details.
+
+Inegration to frameworks
+========================
+
+There is integration to following frameworks:
+
+* `Django <django/>`_
