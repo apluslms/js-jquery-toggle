@@ -53,8 +53,8 @@
 	}
 
 
-	/* Default values for makeToggleButton */
-	var default_options = {
+	/* Default values for makeToggleButton, replaceCheckboxesWithButtons */
+	var default_toggle_options = {
 		active: false, // initial state
 		onicon: 'check',
 		oncolor: 'primary',
@@ -64,11 +64,15 @@
 		// offtext: element.text()
 		nocolor: false,
 		clickHandler: toggle_button_state,
-	}
+	};
+	var default_checkboxes_options = {
+		groupClass: 'btn-group',
+		buttonClass: 'btn',
+	};
 
 	/* jquery method to make button or button like element a toggle button */
 	$.fn.makeToggleButton = function(options) {
-		var settings = $.extend({}, default_options, options);
+		var settings = $.extend({}, default_toggle_options, options);
 
         this.each(function() {
 			var button = $(this);
@@ -101,27 +105,33 @@
     };
 
 	/* jquery method to replace checkboxes or radio selection with toggle buttons */
-	$.fn.replaceCheckboxesWithButtons = function() {
+	$.fn.replaceCheckboxesWithButtons = function(options) {
+		var settings = $.extend({}, default_checkboxes_options, options);
+
 		this.each(function() {
 			var widget = $(this);
-			var group = $('<div class="btn-group"></div>');
+			var group = $('<div></div>')
+				.addClass(settings.groupClass);
 			widget.after(group);
 			widget.find('input:input, input:radio').each(function() {
 				var input = $(this);
-				var button = $('<button type="button" class="btn"></button>');
-				var clickHandler;
+				var button = $('<button type="button"></button>')
+					.addClass(settings.buttonClass)
+					.addClass(input.data('class'));
 				group.append(button);
 
 				button.makeToggleButton({
-					onicon: input.data('on-icon'),
-					ontext: input.data('on-text') || input.parent().text().trim(),
-					oncolor: input.data('on-color') || input.data('color'),
-					officon: input.data('off-icon'),
-					offtext: input.data('off-text') || input.parent().text().trim(),
-					offcolor: input.data('off-color'),
+					onicon: input.data('on-icon') || settings.onicon,
+					ontext: input.data('on-text') || settings.ontext || input.parent().text().trim(),
+					oncolor: input.data('on-color') || settings.oncolor || input.data('color'),
+					officon: input.data('off-icon') || settings.officon,
+					offtext: input.data('off-text') || settings.offtext || input.parent().text().trim(),
+					offcolor: input.data('off-color') || settings.offcolor,
+					nocolor: settings.nocolor,
 					clickHandler: input.is(":radio") ? radio_button_click_handler : checkbox_button_click_handler,
 					active: input.is(':checked'),
 				});
+				if (settings.buttonSetup) settings.buttonSetup(input, button, group);
 				button.data('input_element', input);
 				input.data('button_element', button);
 				input.data('container_element', widget);
