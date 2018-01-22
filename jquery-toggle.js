@@ -74,7 +74,7 @@
 	$.fn.makeToggleButton = function(options) {
 		var settings = $.extend({}, default_toggle_options, options);
 
-        this.each(function() {
+		this.each(function() {
 			var button = $(this);
 			var args = {
 				on: {
