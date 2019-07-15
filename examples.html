@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Examples</title>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css" integrity="sha384-HaPjwh4bVGBOgzg3JW0bTImgRwwoEE+XgYBOiIaAd6EFqpC4wQz9AyxDD5I0ySve" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+	<script src="jquery-toggle.js"></script>
+</head>
+
+<body>
+
+	<h1>Toggle buttons</h1>
+
+	<h4>Example 1: makeToggleButton</h4>
+
+	<button class="toggle">Toggle me</button>
+
+	<script>
+		$('button.toggle').makeToggleButton({
+			// onicon: 'check', // bootstrap glyph names
+			oncolor: 'success', // bootstrap classes
+			// officon: 'unchecked',
+		});
+	</script>
+	<br><br>
+
+
+	<h4>Example 2: replaceCheckboxesWithButtons</h4>
+
+	<label for="ex2">From checkboxes and radio buttons:</label><br>
+	<ul id="ex2" autocomplete="off">
+		<li><label><input name="options" type="checkbox" value="0"> Option 0</label></li>
+		<li><label><input name="options" type="checkbox" value="1"
+			data-off-icon="remove" data-off-color="danger" data-on-text="Include"> Option 1</label></li>
+		<li><label><input name="rg2_1" type="radio" value="0" checked> Two states</label></li>
+		<li><label><input name="rg2_1" type="radio" value="1"> Option 1</label></li>
+		<li><label><input name="rg2_2" type="radio" value="0" checked> Three states</label></li>
+		<li><label><input name="rg2_2" type="radio" value="1"> Option 1</label></li>
+		<li><label><input name="rg2_2" type="radio" value="2"
+			data-icon="minus" data-color="warning" data-text="Nope"> Option 2</label></li>
+		<li><label><input name="rg2_3" type="radio" value="0" checked> Four states</label></li>
+		<li><label><input name="rg2_3" type="radio" value="1"> Option 1</label></li>
+		<li><label><input name="rg2_3" type="radio" value="2"> Option 2</label></li>
+		<li><label><input name="rg2_3" type="radio" value="3"> Option 2</label></li>
+	</ul>
+
+	<script>
+		$('#ex2').replaceCheckboxesWithButtons({
+			onicon: 'ok',
+		});
+	</script>
+	<br><br>
+
+
+
+
+	<h1>Multi-state-buttons</h1>
+
+	<h3>Single-icon</h3>
+
+	<h4>Example 3: makeMultiStateButton</h4>
+
+	<button class="mltsb-single-icon mltsb-3-stage" id="ex3_1">
+		Click me to change state!</button>
+	<button class="mltsb-single-icon mltsb-2-stage">Click me to change state!</button>
+
+	<script>
+		$('#ex3_1').makeMultiStateButton({
+			num_of_states: 3,
+			multi_icon: false,
+		})
+		$('button.mltsb-single-icon.mltsb-2-stage').makeMultiStateButton({
+			multi_icon: false,
+		})
+	</script>
+	<br><br>
+
+
+	<h4>Example 4: replaceInputsWithMultiStateButtons</h4>
+
+	<label for="ex4_1">From dropdowns:</label><br>
+	<p id="ex4_1">
+		<select>
+			<option value="">I have two states</option>
+			<option value="a">Option A</option>
+		</select>
+		<select>
+			<option value="">I have three states</option>
+			<option value="a">Option B</option>
+			<option value="b">Option C</option>
+		</select>
+		<select>
+			<option value="">I have three states, too</option>
+			<option value="a">Option D</option>
+			<option value="b">Option E</option>
+		</select>
+	</p><br>
+
+	<label for="ex4_2">From checkboxes and radio buttons:</label><br>
+	<ul id="ex4_2">
+		<li><label><input name="options" type="checkbox" value="0"> Option 0</label></li>
+		<li><label><input name="rg4_1" type="radio" value="0" checked> State 0</label></li>
+		<li><label><input name="rg4_1" type="radio" value="1"> State 1</label></li>
+		<li><label><input name="rg4_1" type="radio" value="2"> State 2</label></li>
+		<li><label><input name="options" type="checkbox" value="2"> Option 2</label></li>
+		<li><label><input name="rg4_2" type="radio" value="0"> State 0</label></li>
+		<li><label><input name="rg4_2" type="radio" value="1" checked> State 1</label></li>
+		<li><label><input name="rg4_2" type="radio" value="2"> State 2</label></li>
+	</ul>
+
+	<script>
+		$('#ex4_1, #ex4_2').replaceInputsWithMultiStateButtons();
+	</script>
+	<br><br>
+
+
+	<h4>Example 5: Overriding</h4>
+
+	<label for="ex5_1">Options:</label>
+	<ul id="ex5_1">
+		<li><label><input name="options" type="checkbox" value="0"> Option 0</label></li>
+		<li><label><input name="rg5_1" type="radio" value="0" checked> State 0</label></li>
+		<li><label><input name="rg5_1" type="radio" value="1"> State 1</label></li>
+		<li><label><input name="rg5_1" type="radio" value="2"> State 2</label></li>
+	</ul><br>
+
+	<label for="ex5_2">And data:</label>
+	<ul id="ex5_2">
+		<li><label>
+			<input name="options" type="checkbox" value="0"
+				data-off-text="Not selected"
+				data-on-color="primary" data-on-text="Selected" data-on-icon="check">
+				Option 0
+		</label></li>
+
+		<li><label>
+			<input name="options" type="checkbox" value="2"
+				data-off-color="info" data-off-icon="star-empty" data-on-icon="star">
+			Option 2
+		</label></li>
+
+		<li><label>
+			<input name="rg5_2" type="radio" value="0" checked> State 0
+		</label></li>
+		<li><label>
+			<input name="rg5_2" type="radio" value="1"> State 1
+		</label></li>
+		<li><label>
+			<input name="rg5_2" type="radio" value="2">
+			State 2
+		</label></li>
+
+		<li><label>
+			<input name="rg5_3" type="radio" value="0" checked> State 0
+		</label></li>
+		<li><label>
+			<input name="rg5_3" type="radio" value="1" data-icon="ok"> State 1
+		</label></li>
+		<li><label>
+			<input name="rg5_3" type="radio" value="2" data-color="info"> State 2
+		</label></li>
+	</ul><br>
+
+
+	<label for="ex5_3">Dropdowns:</label>
+	<p id="ex5_3">
+		<select>
+			<option value="">I have three states</option>
+			<option value="a">Option B</option>
+			<option value="b">Option C</option>
+		</select>
+		<select>
+			<option value="a">I have three states</option>
+			<option value="b" data-icon="ok">Option B</option>
+			<option value="c" data-icon="remove" data-color="danger">Option C</option>
+		</select>
+	</p>
+
+	<script>
+		$('#ex5_1, #ex5_2, #ex5_3').replaceInputsWithMultiStateButtons({
+			oncolor: 'danger', // applies only to checkboxes
+			color_1: 'success',
+			icon_1: 'plus',
+			color_2: 'warning',
+			icon_2: 'minus',
+		});
+	</script>
+	<br><br>
+
+	<h4>Example 6: Using label classes to replace</h4>
+	<label class="mltsb-label"><input name="options" type="checkbox" value="0"> Option 0</label>
+	<label class="mltsb-label"><input name="options" type="checkbox" value="1"> Option 1</label>
+	<label class="mltsb-label"><input name="options" type="checkbox" value="2"> Option 2</label>
+
+	<script>
+		$(".mltsb-label").replaceInputsWithMultiStateButtons()
+	</script>
+	<br><br><br>
+
+
+
+
+	<h3>Multi-icon</h3>
+
+	<h4>Example 7: makeMultiStateButton</h4>
+
+	<button class="mltsb-multi-icon mltsb-3-stage">Click me!</button>
+	<button id="ex7_2">Click me!</button>
+
+	<script>
+		$('button.mltsb-multi-icon.mltsb-3-stage').makeMultiStateButton({
+			num_of_states: 3,
+			multi_icon: true,
+			text_0: 'Option 0',
+			text_1: 'Option 1',
+			text_2: 'Option 2',
+		})
+		$('#ex7_2').makeMultiStateButton({
+			// num_of_states: 2,
+			multi_icon: true,
+			icon_on_0: 'question-sign',
+			icon_off_0: 'ban-circle',
+			// icon_on_0: 'ok-sign',
+			icon_off_1: 'ok-circle',
+			text_0: 'Option 0',
+			color_1: 'info',
+			text_1: 'Option 1',
+		})
+	</script>
+	<br><br>
+
+
+	<h4>Example 8: replaceInputsWithMultiStateButtons</h4>
+
+	<label for="ex8_1">Buttons from dropdowns:</label>
+	<p id="ex8_1">
+		<select>
+			<option value="">Default</option>
+			<option value="a">Option A</option>
+			<option value="b">Option B</option>
+		</select>
+		<select>
+			<option value="">Default</option>
+			<option value="c">Option C</option>
+		</select>
+	</p><br>
+
+	<label for="ex8_2">Different group of buttons from dropdowns:</label>
+	<p id="ex8_2">
+		<select>
+			<option value="">Default</option>
+			<option value="d">Option D</option>
+			<option value="e">Option E</option>
+		</select>
+	</p><br>
+
+	<label for="ex8_3">Checkbox and radio buttons:</label>
+	<ul id="ex8_3">
+		<li><label><input name="options" type="checkbox" value="0"> Option 0</label></li>
+		<li><label><input name="rg8_1" type="radio" value="0" checked> State 0</label></li>
+		<li><label><input name="rg8_1" type="radio" value="1"> State 1</label></li>
+		<li><label><input name="rg8_1" type="radio" value="2"> State 2</label></li>
+		<li><label><input name="rg8_2" type="radio" value="0" checked> State 0</label></li>
+		<li><label><input name="rg8_2" type="radio" value="1"> State 1</label></li>
+	</ul><br>
+
+	<script>
+		$('#ex8_1, #ex8_2, #ex8_3').replaceInputsWithMultiStateButtons({
+			multi_icon: true,
+			// icon_on_0: 'minus-sign',  // you can try these settings as well
+			// icon_off_0: 'record',
+			// icon_on_1: 'ok-sign',
+			// icon_off_1: 'ok-circle',
+			// icon_on_2: 'remove-sign',
+			// icon_off_2: 'remove-circle',
+		});
+	</script>
+	<br>
+
+
+	<h4>Example 9: Overriding</h4>
+
+	<label for="ex9">Do you like:</label><br>
+	<p id="ex9">
+		<select>
+			<option value="">Ice cream?</option>
+			<option value="y">Yeah, I like ice cream</option>
+			<option value="s">Somewhat</option>
+			<option value="n">No</option>
+		</select>
+		<select>
+			<option value="">Chocolate?</option>
+			<option value="y">I love chocolate!</option>
+			<option value="s">Sure</option>
+			<option value="n">Not really</option>
+		</select>
+		<select>
+			<option value="c">Cookies?</option>
+			<option value="y" data-color="danger" data-icon-on="heart">I adore cookies!</option>
+			<option value="n"
+				data-icon-on="fire" data-icon-off="remove-circle" data-text="I hate them">No
+			</option>
+		</select>
+		<select data-icon-off="menu-right" data-icon-on="triangle-right">
+			<option value="">Custard?</option>
+			<option value="y" data-color="success">Yep!</option>
+			<option value="s" data-text="What's that?">What's that?</option>
+			<option value="dw" data-icon-on="sunglasses" data-color="primary">
+				Especially with fish fingers</option>
+		</select>
+	</p>
+
+	<script>
+		$('#ex9').replaceInputsWithMultiStateButtons({
+			multi_icon: true,
+			icon_on_0: 'question-sign',	// solid circled question mark
+			icon_off_0: 'ban-circle',
+			// icon_on_1: 'ok-sign'
+			icon_off_1: 'ok-circle',     // circled checkmark
+			icon_on_2: 'minus-sign',     // solid circled minus
+			// icon_off_2: 'record',
+			color_2: 'warning',          // yellow
+			text_2: 'Somewhat',          // all buttons will display 'Somewhat' on the third option
+			icon_on_3: 'remove-sign',    // solid circled X
+			icon_off_3: 'remove-circle', // regular circled X
+			color_3: 'danger',           // red
+		})
+	</script>
+	<br><br>
+
+	<h4>Example 10: Mixing single-icon and multi-icon buttons</h4>
+
+	<label for="ex10_1">Dropdowns:</label>
+	<p id="ex10_1">
+		<select data-type="single-icon">
+			<option value="">Default</option>
+			<option value="a">Option A</option>
+			<option value="b">Option B</option>
+		</select>
+		<select>
+			<option value="">Default</option>
+			<option value="c">Option C</option>
+		</select>
+		<select data-type="multi-icon"> <!-- Unnecessary -->
+			<option value="">Default</option>
+			<option value="d">Option D</option>
+			<option value="e">Option E</option>
+		</select>
+	</p><br>
+
+	<label for="ex10_2">Checkbox and radio buttons:</label>
+	<br>
+	<ul id="ex10_2">
+		<li><label><input name="options" type="checkbox" value="0"> Option 0</label></li>
+		<li><label><input name="rg10_1" type="radio" value="0" checked> State 0</label></li>
+		<li><label><input name="rg10_1" type="radio" value="1"> State 1</label></li>
+		<li><label><input name="rg10_2" type="radio" value="0" checked> State 0</label></li>
+		<li><label><input name="rg10_2" type="radio" value="1"
+			data-type="single-icon"> State 1 <!-- any of the options can have the type -->
+		</label></li>
+		<li><label><input name="rg10_2" type="radio" value="2"> State 2</label></li>
+		<li><label>
+			<input name="rg10_3" type="radio" value="0" checked
+				data-type="single-icon"> State 0 <!-- overriden in latter option -->
+		</label></li>
+		<li><label><input name="rg10_3" type="radio" value="1"> State 1</label></li>
+		<li><label><input name="rg10_3" type="radio" value="2"
+			data-type="multi-icon"> State 2 <!-- last 'data-type' in radio group overrides -->
+		</label></li>
+	</ul>
+
+	<script>
+		$('#ex10_1, #ex10_2').replaceInputsWithMultiStateButtons({
+			multi_icon: true,
+			// icon_on_0: 'minus-sign', // you can try these settings as well
+			// icon_off_0: 'record',
+			// icon_on_1: 'ok-sign',
+			// icon_off_1: 'ok-circle',
+			// icon_on_2: 'remove-sign',
+			// icon_off_2: 'remove-circle',
+		});
+	</script>
+	<br><br><br>
+
+	<h4>Example 11</h4>
+
+	<button id="crazy">Click me!</button>
+
+	<script>
+		const sentence = (" Don't make a button like this it's just stupid " +
+			"to have a button with so many states :(").split(' ');
+		const num_of_states = sentence.length;
+		var args = {
+			num_of_states: num_of_states,
+			multi_icon: true,
+			icon_on: 'check',
+			icon_off: 'unchecked',
+		}
+		for (var i = 0; i < num_of_states; i++) {
+			args['text_' + i] = sentence[i]
+		}
+		$('#crazy').makeMultiStateButton(args)
+	</script>
+	<br><br><br><br>
+
+
+</body>
+</html>
