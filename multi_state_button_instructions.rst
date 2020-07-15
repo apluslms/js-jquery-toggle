@@ -186,7 +186,7 @@ overriden.
 
 .. code-block:: html
 
-<label for="ex9_1">Do you like:</label><br>
+  <label for="ex9_1">Do you like:</label><br>
   <p id="ex9_1">
     <select>
       <option value="">Ice cream?</option>
