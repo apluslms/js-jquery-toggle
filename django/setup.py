@@ -6,25 +6,48 @@ https://packaging.python.org/en/latest/distributing.html
 https://github.com/pypa/sampleproject
 """
 
+import sys
 from codecs import open # To use a consistent encoding
 from os.path import abspath, dirname, join
-from setuptools import setup, find_packages
-from distutils.command.install import INSTALL_SCHEMES
+
+try:
+    from setuptools import find_packages, setup
+    from setuptools.command.build_py import build_py
+except ImportError:
+    print('Setuptools is not installed! Have you installed requirements_build.txt?', file=sys.stderr)
+    sys.exit(1)
 
 here = abspath(dirname(__file__))
 root = dirname(here)
 
-# Store data to same place as python libraries
-for scheme in INSTALL_SCHEMES.values():
-    scheme['data'] = scheme['purelib']
+
+class BuildPyCopyRootData(build_py):
+    """Enhanced 'build_py' command to copy data files from the root"""
+
+    def run(self):
+        super().run()
+        self.copy_root_data()
+
+    def copy_root_data(self):
+        files = [
+            ('jquery-toggle.js', 'js_jquery_toggle/static'),
+        ]
+        for filename, dest_path in files:
+            target = join(self.build_lib, dest_path, filename)
+            self.mkpath(dirname(target))
+            srcfile = join(root, filename)
+            outf, copied = self.copy_file(srcfile, target)
+
 
 # Get the long description from the README file
 with open(join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
+
 # Get version from VERSION file
 with open(join(root, 'VERSION'), encoding='utf-8') as f:
     version = f.read().strip()
+
 
 setup(
     name='js-jquery-toggle-django',
@@ -64,8 +87,8 @@ setup(
 
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
     include_package_data = True,
-    data_files=[
-        ('js_jquery_toggle/static/', ['../jquery-toggle.js']),
-    ],
     install_requires=[],
+    cmdclass={
+        'build_py': BuildPyCopyRootData,
+    },
 )
