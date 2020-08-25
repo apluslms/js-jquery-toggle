@@ -279,12 +279,12 @@
 						}
 						this.dataset['button_element'] = button;
 						const multi_icon = (
-							this.dataset['type'] == 'multi-icon' ? true
-							: this.dataset['type'] == 'single-icon' ? false
+							this.dataset['type'] == 'multiIcon' ? true
+							: this.dataset['type'] == 'singleIcon' ? false
 							: undefined
 						);
-						if (multi_icon) button.data('multi-icon', true);
-						else if (multi_icon !== undefined) button.data('multi-icon', false);
+						if (multi_icon) button.data('multiIcon', true);
+						else if (multi_icon !== undefined) button.data('multiIcon', false);
 					}
 					// dropdowns within a group of checkboxes and radio buttons are ignored
 				})
@@ -293,7 +293,7 @@
 				radio_buttons.forEach(function(button) {
 					const radio_inputs = button.data('inputs');  // Array[HTMLElement]
 					const num_of_states = radio_inputs.length;
-					var multi_icon = button.data('multi-icon');
+					var multi_icon = button.data('multiIcon');
 					if (multi_icon === undefined) multi_icon = settings.multi_icon;
 					if (multi_icon === undefined) multi_icon = num_of_states > 3;
 					var selected_state = radio_inputs.findIndex(function(ipt) {return ipt.checked});
@@ -336,14 +336,14 @@
 					const options = input.children()
 					const num_of_states = options.length
 					var multi_icon = (
-						this.dataset['type'] == 'multi-icon' ? true
-						: this.dataset['type'] == 'single-icon' ? false
+						this.dataset['type'] == 'multiIcon' ? true
+						: this.dataset['type'] == 'singleIcon' ? false
 						: undefined
 					)
 					if (multi_icon === undefined) multi_icon = settings.multi_icon;
 					if (multi_icon === undefined) multi_icon = num_of_states > 3;
-					const icon_off = input.data('icon-off');
-					const icon_on = input.data('icon-on');
+					const icon_off = input.data('iconOff');
+					const icon_on = input.data('iconOn');
 
 					const args = {
 						num_of_states: num_of_states,
@@ -354,8 +354,8 @@
 					const states = options.map(function(i) {
 						const elem_value = this.value
 						if (multi_icon) {
-							args['icon_on_' + i] = this.dataset['icon-on'] || icon_on || settings['icon_on_' + i];
-							args['icon_off_' + i] = this.dataset['icon-off'] || icon_off || settings['icon_off_' + i];
+							args['icon_on_' + i] = this.dataset['iconOn'] || icon_on || settings['icon_on_' + i];
+							args['icon_off_' + i] = this.dataset['iconOff'] || icon_off || settings['icon_off_' + i];
 						} else {
 							args['icon_' + i] = this.dataset['icon'] || settings['icon_' + i];
 						}
