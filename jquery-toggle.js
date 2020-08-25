@@ -53,6 +53,24 @@
 		button.css('min-width', max_width + 'px');
 	}
 
+	/*
+	 * Helper function to dispatch change event.
+	 * jQuery event triggers alert only jQuery event listeners, not native ones.
+	 */
+	function simulateChange(elem) {
+		let event;
+		if (typeof Event === 'function') {
+			event = new Event('change', {
+				bubbles: true,
+				cancelable: false,
+			});
+		} else { // IE11
+			event = document.createEvent('Event');
+			event.initEvent('change', true, false);
+		}
+		elem.dispatchEvent(event);
+	}
+
 
 	/*
 	 * bound handler for button on:state_change
@@ -82,7 +100,6 @@
 			button.removeClass(prev.color).addClass(act.color);
 		}
 		button.html(icon + " " + act.text);
-		button.trigger('blur');
 	}
 
 	/* bound handler for button on:click and on:toggle_state*/
@@ -103,6 +120,9 @@
 		var active = prev.next();
 		if (!active.length) active = input.children(":first");
 		active.prop('selected', true);
+		active.each(function(i, elem) {
+			simulateChange(elem)
+		});
 		const new_state = input.children().index(active);
 		button.triggerHandler('state_change', [new_state]);
 	}
@@ -114,6 +134,9 @@
 
 		const active = !input.is(':checked');
 		input.prop('checked', active);
+		input.each(function (i, elem) {
+			simulateChange(elem)
+		});
 		const state = active ? 1 : 0
 		button.triggerHandler('state_change', [state]);
 	}
@@ -128,6 +151,7 @@
 		})
 		const new_state = (prev_state + 1) % args.num_of_states;
 		inputs[new_state].checked = true;
+		simulateChange(inputs[new_state]);
 		button.triggerHandler('state_change', [new_state]);
 	}
 

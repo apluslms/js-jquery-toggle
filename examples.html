@@ -403,8 +403,51 @@
 		}
 		$('#crazy').makeMultiStateButton(args)
 	</script>
-	<br><br><br><br>
+	<br><br><br>
 
+	<h3>Triggering change events</h3>
+
+	<h4>Example 12: With event listeners and onchange functions</h4>
+
+	<label for="ex12_1">From dropdowns:</label><br>
+	<p id="ex12_1">
+		<select>
+			<option value="">I have two states</option>
+			<option value="a">Option A</option>
+		</select>
+		<select onchange="document.getElementById('ex12_event_log2').textContent = this.value">
+			<option value="">I have three states</option>
+			<option value="a">Option B</option>
+			<option value="b">Option C</option>
+		</select>
+	</p><br>
+
+	<label for="ex12_2">From checkboxes and radio buttons:</label><br>
+	<ul id="ex12_2">
+		<li><label><input name="options" type="checkbox" value="0"> Option 0</label></li>
+		<li><label><input name="rg4_1" type="radio" value="0" checked> State 0</label></li>
+		<li><label><input name="rg4_1" type="radio" value="1"> State 1</label></li>
+		<li><label><input name="rg4_1" type="radio" value="2"> State 2</label></li>
+	</ul>
+
+	<br><br>
+	<p>
+		<b>Number of changes:</b> <span id="ex12_event_log1">0</span>
+	</p>
+	<p>
+		<b>Value of second dropwdown:</b> <span id="ex12_event_log2"></span>
+	</p>
+
+	<script>
+		$('#ex12_1, #ex12_2').replaceInputsWithMultiStateButtons();
+		$('#ex12_1 select, #ex12_2 :checkbox, #ex12_2 :radio').each(function(i, elem) {
+			elem.addEventListener('change', function(evt) {
+				const evtLog = document.getElementById("ex12_event_log1");
+				evtLog.textContent = Number(evtLog.textContent) + 1
+			});
+		})
+	</script>
+	<br><br>
 
 </body>
 </html>
