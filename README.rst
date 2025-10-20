@@ -2,7 +2,7 @@
 Jquery addon for creating multi-state- and toggle buttons for radios, checkboxes and dropdowns
 ##############################################################################################
 
-Simple javascript file to help toggle bootstrap glyphs on toggle buttons
+Simple javascript file to help toggle Bootstrap Icons on buttons
 and replace checkboxes, radio groups and dropdowns with multi-state-buttons.
 Library adds four methods for jquery for easy usage.
 This script requires `jquery <https://jquery.com/>`_ (3.1+).
@@ -25,8 +25,8 @@ You can add js handlers for :code:`button` with following snippet:
 .. code-block:: javascript
 
   $('button.toggle').makeToggleButton({
-    onicon: 'check', // bootstrap glyph names
-    oncolor: 'success', // bootstrap classes
+    onicon: 'check', // legacy glyphicon key (mapped) or provide a bootstrap-icons class like 'bi bi-check'
+    oncolor: 'success', // Bootstrap 5 color classes
     officon: 'unchecked',
   });
 
@@ -143,6 +143,13 @@ with four or more states are multi-state-buttons.
 
 More details can be found in the
 `instruction file <multi_state_button_instructions.rst>`_.
+
+Notes on icons
+==============
+
+- This library now targets Bootstrap 5 and bootstrap-icons. Make sure the bootstrap-icons CSS is included in your page.
+- Font Awesome classes are still supported if you pass full FA class names (e.g. 'fas fa-circle').
+- Legacy Bootstrap 3 glyphicon short names (e.g. 'ok', 'ok-sign', 'record', 'remove') are mapped to equivalent bootstrap-icons automatically for backward compatibility.
 
 
 Integration to frameworks

@@ -10,7 +10,7 @@ The multi-state-buttons will be grouped by such that the dropdowns with
 the same label text will be grouped together under the same label.
 The button groups will appear at the location of the first dropdown with
 that label text. Dropdowns must be surrounded by a parent node, as that will
-be hidden.
+be hidden (Bootstrap 5: class 'd-none').
 
 .. code-block:: html
 
@@ -78,14 +78,13 @@ State   Icon                Bootstrap name
 =====   ================    ==============
 
 There are two sets of default icons for the multi-icon-buttons,
-ones using Bootstrap glyphicons and another using Font Awesome icons.
-The Bootstrap set is used by default, but if there is access to the
-Font Awesome library, the Font Awesome icons can be used by providing
-:code:`font_awesome: true` as one of the key-value pairs of the
+one using Bootstrap Icons (default) and another using Font Awesome icons.
+If there is access to the Font Awesome library, the Font Awesome icons can be
+used by providing :code:`font_awesome: true` as one of the key-value pairs of the
 argument object of the method :code:`replaceInputsWithMultiStateButtons`.
 
 +------------+-------------------+--------------+--------------+---------------+
-|            | Bootstrap                        | Font Awesome                 |
+|            | Bootstrap Icons                  | Font Awesome                 |
 +            +-------------------+--------------+--------------+---------------+
 |            | Icon              | Name         | Icon         |  Name         |
 +============+===================+==============+==============+===============+
@@ -95,20 +94,22 @@ argument object of the method :code:`replaceInputsWithMultiStateButtons`.
 +------------+-------------------+--------------+--------------+---------------+
 
 Font Awesome icons must be referred to by their full name (beginning with
-'far fa-', 'fas fa-' or 'fal-fa'), but Bootstrap glyphs can be named
-without 'glyphicon glyphicon-'.
+'far fa-', 'fas fa-' or 'fal fa-').
+Bootstrap Icons can be provided either by the full class (e.g. 'bi bi-check')
+or by legacy Glyphicon shorthand keys (e.g. 'ok', 'record'), which will be
+mapped to the closest Bootstrap Icons equivalent.
 
 The possible colors of the buttons are Bootstrap colors:
 
 =======  ===========
 Name     Color
 =======  ===========
-default  white
-primary  bright blue
-danger   red
-warning  yellow
-success  green
-info     light blue
+secondary  gray (replacement for BS3 'default')
+primary    bright blue
+danger     red
+warning    yellow
+success    green
+info       light blue
 =======  ===========
 
 In addition to these characteristics, there is an optional characteristic
@@ -233,7 +234,7 @@ for a button through the data attribute. These override the argument overrides.
 +             + icon names      +             +            +           +                +                           +
 | onicon      | (with or        |             |            |           |                |                           |
 +-------------+ without         +-------------+------------+-----------+----------------+---------------------------+
-| icon        | "glyphicon"     | X           | \-         | \-        | input-tag      | option-tag                |
+| icon        | "bootstrap-icons" or FA classes | X | \- | \- | input-tag | option-tag |
 +-------------+ text),          +-------------+------------+-----------+----------------+---------------------------+
 | icon-off    | Font            | \-          | X          | \-        | input-tag      | select-tag (general, all) |
 +             + Awesome         +             +            +           +                +                           +

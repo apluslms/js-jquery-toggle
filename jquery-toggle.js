@@ -27,16 +27,64 @@
 
 	/*
 	 * Helper function for expressing icons.
-	 * Supports Font Awesome (icon names start with 'fa') and
-	 * Bootstap glyphicons (provide names without 'glyphicon' -text)
-	 * Returns icon-html-element
+	 * Supports:
+	 *  - Font Awesome (class names starting with 'fa')
+	 *  - Bootstrap Icons (class names starting with 'bi')
+	 *  - Backward-compat for older Glyphicons names (maps to Bootstrap Icons)
+	 * Returns icon HTML element string.
 	 */
 	function html_icon(name) {
-		if (!name) return ''     // no name, something went wrong
-		else if (!name.startsWith('fa') && !name.startsWith('glyphicon')) {
-			name = 'glyphicon glyphicon-' + name
+		if (!name) return '' // no name provided
+
+		// If full class given for FA or BI, pass through
+		if (name.startsWith('fa')) {
+			return '<i class="' + name + '"></i>'
 		}
-		return '<i class="' + name + '"></i>'
+		if (name.startsWith('bi')) {
+			return '<i class="' + name + '"></i>'
+		}
+
+		// Normalize legacy glyphicon inputs to plain icon key
+		let key = name
+		if (name.startsWith('glyphicon')) {
+			// e.g. 'glyphicon glyphicon-ok-sign' or 'glyphicon-ok'
+			const parts = name.split('glyphicon-')
+			key = parts[parts.length - 1]
+		}
+
+		// Map common (legacy) Glyphicon names to Bootstrap Icons names
+		const glyphToBi = {
+			// basics
+			'unchecked': 'square',
+			'check': 'check',
+			'plus': 'plus',
+			'minus': 'dash',
+			'remove': 'x',
+			// circles / signs
+			'ok': 'check',
+			'ok-sign': 'check-circle-fill',
+			'ok-circle': 'check-circle',
+			'minus-sign': 'dash-circle-fill',
+			'remove-sign': 'x-circle-fill',
+			'remove-circle': 'x-circle',
+			'record': 'circle-fill',
+			// state / query
+			'question-sign': 'question-circle-fill',
+			'ban-circle': 'ban',
+			// stars
+			'star': 'star-fill',
+			'star-empty': 'star',
+			// arrows / menus
+			'menu-right': 'chevron-right',
+			'triangle-right': 'caret-right-fill',
+			// fun
+			'sunglasses': 'sunglasses',
+			'fire': 'fire',
+			'heart': 'heart-fill',
+		};
+
+		const biName = glyphToBi[key] || key;
+		return '<i class="bi bi-' + biName + '"></i>'
 	}
 
 	/*Helper function, goes through options and sets min-width to widest*/
@@ -163,22 +211,25 @@
 	const default_multi_state_options = {
 		state: 0,
 		num_of_states: 2,
-		color_0: 'default',
-		color: ['primary', 'danger', 'warning', 'success', 'info'],
+		// Bootstrap 5 replacement for BS3 "default"
+		color_0: 'secondary',
+		color: ['secondary', 'primary', 'danger', 'warning', 'success', 'info'],
 		nocolor: false,
 		clickHandler: toggle_mltsb_state,
 		buttonClass: 'btn',
 	} ;
 
 	const default_single_icon_options = {
+		// Bootstrap Icons equivalents (via mapper)
 		icon_0: 'unchecked',
 		icon_1: 'check',
 		icon_2: 'remove',
 	} ;
 
 	const bootstrap_multi_icon_options = {
-		icon_on: 'ok-sign',
-		icon_off: 'record',
+		// Bootstrap Icons equivalents (via mapper)
+		icon_on: 'ok-sign',      // -> check-circle-fill
+		icon_off: 'record',      // -> circle-fill
 	} ;
 
 	const fa_multi_icon_options = {
@@ -225,8 +276,11 @@
 					text: settings['text_' + i] || button.text().trim(),
 				};
 				if (!settings.nocolor) {
-					const color = settings['color_' + i] || settings.color[(i - 1) % settings.color.length];
-					args[i]['color'] = 'btn-' + color;
+					let color = settings['color_' + i] || settings.color[(i - 1) % settings.color.length];
+					if (color === 'default') color = 'secondary';
+					// State 0 is considered the "not selected"/default state → outline.
+					const variant = (i === 0) ? 'btn-outline-' : 'btn-';
+					args[i]['color'] = variant + color;
 				}
 			}
 			button.data('jquery_toggle_options', args);
@@ -347,7 +401,7 @@
 					if (settings.buttonSetup) settings.buttonSetup(input, button);
 				})
 
-				widget.addClass('hidden');
+				widget.addClass('d-none');
 
 			// group of dropdowns
 			} else {
@@ -397,7 +451,7 @@
 					if (settings.buttonSetup) settings.buttonSetup(input, button);
 					button.data('input_element', input);
 					input.data('button_element', button);
-					input.parent().addClass('hidden');
+					input.parent().addClass('d-none');
 					update_width(button);
 				})
 			}
